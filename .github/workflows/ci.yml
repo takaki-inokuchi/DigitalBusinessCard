@@ -1,31 +1,23 @@
-name: CI Test & Deploy
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   test-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # コードを取得
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Node.js をセットアップ
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
           cache: "npm"
 
-      # 依存パッケージのインストール
       - name: Install dependencies
         run: npm ci
 
-      # Makefile の test-deploy を実行
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
       - name: Run Makefile test-deploy
         run: make test-deploy
         env:
