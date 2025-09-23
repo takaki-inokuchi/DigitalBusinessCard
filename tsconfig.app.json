@@ -1,27 +1,51 @@
 {
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    // ts ビルドのキャッシュ情報を保存する場所
     "target": "ES2022",
+    // 出力する JavaScript のターゲットバージョン (ここでは ES2022)
     "useDefineForClassFields": true,
+    // クラスフィールドを ES の標準仕様どおりに扱う
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    // 使える型ライブラリを指定 (ES2022 と DOM 関連)
     "module": "ESNext",
+    // モジュールの出力形式 (ここでは ESNext)
     "skipLibCheck": true,
+    // 型チェック時に外部ライブラリの型定義はスキップ
+    "types": ["jest", "@testing-library/jest-dom"],
+    // グローバルで読み込む型定義ファイル (jest と jest-dom を含める)
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+    // Vite や Webpack などのバンドラー向けのモジュール解決方法
     "allowImportingTsExtensions": true,
+    // import に .ts 拡張子を含めても許可する
     "verbatimModuleSyntax": true,
+    // import/export をそのまま出力 (変換しない)
     "moduleDetection": "force",
+    // すべてのファイルをモジュールとして扱うよう強制
     "noEmit": true,
+    // コンパイルしてもファイルを出力しない (型チェック専用)
     "jsx": "react-jsx",
+    // JSX を React 17 以降の新方式 (自動変換) で扱う
+    "esModuleInterop": true,
+    // CommonJS のモジュールを import できるようにする
 
     /* Linting */
     "strict": true,
+    // 厳格モード (nullチェックや暗黙的any禁止など)
+
     "noUnusedLocals": true,
+    // 使ってない変数があればエラーにする
     "noUnusedParameters": true,
+     // 使ってない関数の引数があればエラーにする
     "erasableSyntaxOnly": true,
+     // 型の安全に関係ない構文だけ許可 (パフォーマンス向上目的)
     "noFallthroughCasesInSwitch": true,
+    // switch文で break を書き忘れるとエラーにする
     "noUncheckedSideEffectImports": true
+     // import しただけで副作用を起こすものをチェック
   },
   "include": ["src"]
+  // 型チェックの対象にするフォルダ
 }
