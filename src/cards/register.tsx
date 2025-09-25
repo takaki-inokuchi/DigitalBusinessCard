@@ -1,13 +1,14 @@
 import { Box, Button, Card, CardBody, Input, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { supabase } from "../../supabaseClient";
 
 type FormData = {
-  word: string;
+  user_id: string;
   name: string;
   description: string;
-  github: string;
-  qiita: string;
-  x: string;
+  github_id: string;
+  qiita_id: string;
+  x_id: string;
 };
 
 export const Register = () => {
@@ -17,9 +18,16 @@ export const Register = () => {
     formState: { errors }, // バリデーションエラー
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log("送信データ:", data);
-    // 登録処理
+    const { error } = await supabase.from("users").insert([data]);
+
+    if (error) {
+      console.log(error.message);
+      alert("登録エラー");
+    } else {
+      alert("登録しました！");
+    }
   };
 
   return (
@@ -28,9 +36,11 @@ export const Register = () => {
       <Box>
         <Card>
           <CardBody>
-            <Text>好きな英単語</Text>
-            <Input {...register("word", { required: "英単語は必須です" })} />
-            {errors.word && <Text color="red">{errors.word.message}</Text>}
+            <Text>好きなid</Text>
+            <Input {...register("user_id", { required: "英単語は必須です" })} />
+            {errors.user_id && (
+              <Text color="red">{errors.user_id.message}</Text>
+            )}
 
             <Text>お名前</Text>
             <Input {...register("name", { required: "名前は必須です" })} />
@@ -40,31 +50,41 @@ export const Register = () => {
             <Input {...register("description")} />
 
             <Text>GithubId</Text>
-            <Input {...register("github",{
-              pattern:{
-                value:/^[A-Za-z]*$/,
-                message:"GithubIDは英字のみで入力して下さい"
-              }
-            })} />
-            {errors.github && <Text color="red">{errors.github.message}</Text>}
+            <Input
+              {...register("github_id", {
+                pattern: {
+                  value: /^[A-Za-z]*$/,
+                  message: "GithubIDは英字のみで入力して下さい",
+                },
+              })}
+            />
+            {errors.github_id && (
+              <Text color="red">{errors.github_id.message}</Text>
+            )}
 
             <Text>QiitaId</Text>
-            <Input {...register("qiita",{
-              pattern:{
-                value:/^[A-Za-z]*$/,
-                message:"qiitaIDは英字のみで入力して下さい"
-              }
-            })} />
-            {errors.qiita && <Text color="red">{errors.qiita.message}</Text>}
+            <Input
+              {...register("qiita_id", {
+                pattern: {
+                  value: /^[A-Za-z]*$/,
+                  message: "qiitaIDは英字のみで入力して下さい",
+                },
+              })}
+            />
+            {errors.qiita_id && (
+              <Text color="red">{errors.qiita_id.message}</Text>
+            )}
 
             <Text>TwitterId</Text>
-            <Input {...register("x",{
-              pattern:{
-                value:/^[A-Za-z]*$/,
-                message:"xIDは英字のみで入力して下さい"
-              }
-            })} />
-             {errors.x && <Text color="red">{errors.x.message}</Text>}
+            <Input
+              {...register("x_id", {
+                pattern: {
+                  value: /^[A-Za-z]*$/,
+                  message: "xIDは英字のみで入力して下さい",
+                },
+              })}
+            />
+            {errors.x_id && <Text color="red">{errors.x_id.message}</Text>}
           </CardBody>
 
           <Button onClick={handleSubmit(onSubmit)}>登録</Button>

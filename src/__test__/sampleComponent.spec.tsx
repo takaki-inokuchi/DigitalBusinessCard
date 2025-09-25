@@ -3,5 +3,5 @@ import App from "../App";
 
 test("renders app title", () => {
   render(<App />);
-  expect(screen.getByText("React!!!!!!!!!!!")).toBeInTheDocument();
+  expect(screen.getByText("新規名刺登録")).toBeInTheDocument();
 });

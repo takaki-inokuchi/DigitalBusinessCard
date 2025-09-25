@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import { AppUser } from "../user/user";
 import {
@@ -12,6 +12,7 @@ import {
   Text,
   Link,
   HStack,
+  Button,
 } from "@chakra-ui/react";
 
 import { FaGithub } from "react-icons/fa";
@@ -26,6 +27,8 @@ export const SampleId = () => {
   const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState<AppUser | null>(null);
   const [skills, setSkills] = useState<Skill[]>([]);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (!id) return;
@@ -120,6 +123,7 @@ export const SampleId = () => {
               </Stack>
             </CardBody>
           </Card>
+          <Button m={3} onClick={() => navigate("/register")}>戻る</Button>
         </Box>
       ) : (
         <p>読み込み中...</p>
