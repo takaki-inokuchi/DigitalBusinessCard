@@ -1,4 +1,3 @@
-// __tests__/SampleId.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { SampleId } from "./sample-id";

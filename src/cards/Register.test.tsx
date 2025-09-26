@@ -1,9 +1,7 @@
-// __tests__/Register.test.tsx
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { Register } from "./register";
 
-// Supabase モック
 jest.mock("../../supabaseClient", () => ({
   supabase: {
     from: jest.fn().mockImplementation(() => ({
