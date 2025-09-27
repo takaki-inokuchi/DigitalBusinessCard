@@ -11,14 +11,16 @@ const mockUser = {
   x_id: "https://x.com/test",
   created_at: "2025-01-01",
 };
-
+//データベールへのアクセスをモック化
 jest.mock("../../supabaseClient", () => ({
   supabase: {
     from: jest.fn().mockReturnThis(),
     select: jest.fn().mockReturnThis(),
     eq: jest.fn().mockReturnThis(),
     single: jest.fn().mockResolvedValue({ data: mockUser, error: null }),
-    in: jest.fn().mockResolvedValue({ data: [{ id: 1, name: "React" }], error: null }),
+    in: jest
+      .fn()
+      .mockResolvedValue({ data: [{ id: 1, name: "React" }], error: null }),
   },
 }));
 
@@ -33,90 +35,51 @@ describe("SampleIdページ", () => {
     jest.clearAllMocks();
   });
 
-  it("名前が表示される", async () => {
-    render(
-      <MemoryRouter initialEntries={["/cards/test123"]}>
-        <Routes>
-          <Route path="/cards/:id" element={<SampleId />} />
-        </Routes>
-      </MemoryRouter>
-    );
+  describe("SampleId コンポーネント", () => {
+    beforeEach(() => {
+      render(
+        <MemoryRouter initialEntries={["/cards/test123"]}>
+          <Routes>
+            <Route path="/cards/:id" element={<SampleId />} />
+          </Routes>
+        </MemoryRouter>
+      );
+    }); //MemoryRouterはURLを扱う機能をモックするためのRouter initialEntriesでテスト開始時の URLを指定
 
-    expect(await screen.findByText(mockUser.name)).toBeInTheDocument();
-  });
+    it("名前が表示される", async () => {
+      expect(await screen.findByText(mockUser.name)).toBeInTheDocument();
+    });
 
-  it("自己紹介が表示される", async () => {
-    render(
-      <MemoryRouter initialEntries={["/cards/test123"]}>
-        <Routes>
-          <Route path="/cards/:id" element={<SampleId />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    it("自己紹介が表示される", async () => {
+      expect(await screen.findByText(mockUser.description)).toBeInTheDocument();
+    });
 
-    expect(await screen.findByText(mockUser.description)).toBeInTheDocument();
-  });
+    it("技術が表示される", async () => {
+      expect(await screen.findByText("React")).toBeInTheDocument();
+    });
 
-  it("技術が表示される", async () => {
-    render(
-      <MemoryRouter initialEntries={["/cards/test123"]}>
-        <Routes>
-          <Route path="/cards/:id" element={<SampleId />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    it("Githubアイコンが表示される", async () => {
+      expect(
+        await screen.findByRole("link", { name: /github/i })
+      ).toBeInTheDocument();
+    });
 
-    expect(await screen.findByText("React")).toBeInTheDocument();
-  });
+    it("Qiitaアイコンが表示される", async () => {
+      expect(
+        await screen.findByRole("link", { name: /qiita/i })
+      ).toBeInTheDocument();
+    });
 
-  it("Githubアイコンが表示される", async () => {
-    render(
-      <MemoryRouter initialEntries={["/cards/test123"]}>
-        <Routes>
-          <Route path="/cards/:id" element={<SampleId />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    it("Twitterアイコンが表示される", async () => {
+      expect(
+        await screen.findByRole("link", { name: /twitter/i })
+      ).toBeInTheDocument();
+    });
 
-    expect(await screen.findByRole("link", { name: /github/i })).toBeInTheDocument();
-  });
-
-  it("Qiitaアイコンが表示される", async () => {
-    render(
-      <MemoryRouter initialEntries={["/cards/test123"]}>
-        <Routes>
-          <Route path="/cards/:id" element={<SampleId />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    expect(await screen.findByRole("link", { name: /qiita/i })).toBeInTheDocument();
-  });
-
-  it("Twitterアイコンが表示される", async () => {
-    render(
-      <MemoryRouter initialEntries={["/cards/test123"]}>
-        <Routes>
-          <Route path="/cards/:id" element={<SampleId />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    expect(await screen.findByRole("link", { name: /twitter/i })).toBeInTheDocument();
-  });
-
-  it("戻るボタンで/に遷移する", async () => {
-    render(
-      <MemoryRouter initialEntries={["/cards/test123"]}>
-        <Routes>
-          <Route path="/cards/:id" element={<SampleId />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    const backButton = await screen.findByRole("button", { name: /戻る/i });
-    fireEvent.click(backButton);
-
-    expect(mockNavigate).toHaveBeenCalledWith("/");
+    it("戻るボタンで/に遷移する", async () => {
+      const backButton = await screen.findByRole("button", { name: /戻る/i });
+      fireEvent.click(backButton);
+      expect(mockNavigate).toHaveBeenLastCalledWith("/");
+    });
   });
 });
