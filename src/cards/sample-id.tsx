@@ -100,7 +100,7 @@ export const SampleId = () => {
               </Stack>
             </CardBody>
           </Card>
-          <Button m={3} onClick={() => navigate("/register")}>
+          <Button m={3} onClick={() => navigate("/")}>
             戻る
           </Button>
         </Box>

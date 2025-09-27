@@ -76,7 +76,7 @@ describe("SampleIdページ", () => {
 
     it("Twitterアイコンが表示される", async () => {
       expect(
-        await screen.findByRole("link", { name: /twitter/i })
+        await screen.findByRole("link", { name: /x/i })
       ).toBeInTheDocument();
     });
 
