@@ -64,19 +64,19 @@ describe("SampleIdページ", () => {
 
     it("Githubアイコンが表示される", async () => {
       expect(
-        await screen.findByRole("link", { name: /github/i })
+        await screen.findByRole("link", { name: /github_id/i })
       ).toBeInTheDocument();
     });
 
     it("Qiitaアイコンが表示される", async () => {
       expect(
-        await screen.findByRole("link", { name: /qiita/i })
+        await screen.findByRole("link", { name: /qiita_id/i })
       ).toBeInTheDocument();
     });
 
     it("Twitterアイコンが表示される", async () => {
       expect(
-        await screen.findByRole("link", { name: /x/i })
+        await screen.findByRole("link", { name: /x_id/i })
       ).toBeInTheDocument();
     });
 
