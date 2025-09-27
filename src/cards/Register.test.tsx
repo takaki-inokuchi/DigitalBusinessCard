@@ -17,6 +17,10 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockNavigate,
 }));
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 describe("Registerページ", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -44,13 +48,13 @@ describe("Registerページ", () => {
     fireEvent.change(screen.getByLabelText("自己紹介"), {
       target: { value: "自己紹介テキスト" },
     });
-    fireEvent.change(screen.getByLabelText("GithubId"), {
+    fireEvent.change(screen.getByLabelText("github_id"), {
       target: { value: "GithubTest" },
     });
-    fireEvent.change(screen.getByLabelText("QiitaId"), {
+    fireEvent.change(screen.getByLabelText("qiita_id"), {
       target: { value: "QiitaTest" },
     });
-    fireEvent.change(screen.getByLabelText("TwitterId"), {
+    fireEvent.change(screen.getByLabelText("x_id"), {
       target: { value: "TwitterTest" },
     });
 

@@ -12,6 +12,7 @@ type FormData = {
   x_id: string;
 };
 
+
 export const Register = () => {
   const {
     register, // inputをフォームに登録する
@@ -65,7 +66,7 @@ export const Register = () => {
             )}
 
             <Text>GithubId</Text>
-            <Input
+            <Input aria-label="github_id"
               {...register("github_id", {
                 pattern: {
                   value: /^[A-Za-z]*$/,
@@ -78,7 +79,7 @@ export const Register = () => {
             )}
 
             <Text>QiitaId</Text>
-            <Input
+            <Input aria-label="qiita_id"
               {...register("qiita_id", {
                 pattern: {
                   value: /^[A-Za-z]*$/,
@@ -91,7 +92,7 @@ export const Register = () => {
             )}
 
             <Text>TwitterId</Text>
-            <Input
+            <Input aria-label="x_id"
               {...register("x_id", {
                 pattern: {
                   value: /^[A-Za-z]*$/,

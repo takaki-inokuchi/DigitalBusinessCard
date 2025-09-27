@@ -9,7 +9,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 beforeAll(() => {
-  jest.spyOn(window, "alert").mockImplementation(() => {});
+  window.alert = jest.fn();
 });
 
 afterEach(() => {
@@ -51,13 +51,13 @@ describe("Cardmenu コンポーネント", () => {
   it("新規登録押すと画面が遷移", () => {
     const newButton = document.createElement("button");
     newButton.textContent = "新規登録はこちら";
-    newButton.onclick = () => mockNavigate("/cards/register")
+    newButton.onclick = () => mockNavigate("/cards/register");
 
     document.body.appendChild(newButton);
 
     fireEvent.click(screen.getByText("新規登録はこちら"));
     expect(mockNavigate).toHaveBeenCalledWith("/cards/register");
 
-    document.body.removeChild(newButton); 
-  })
+    document.body.removeChild(newButton);
+  });
 });
