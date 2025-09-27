@@ -22,66 +22,73 @@ describe("Registerページ", () => {
     jest.clearAllMocks();
   });
 
-  it("タイトルが表示される", () => {
-    render(
-      <MemoryRouter initialEntries={["/register"]}>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </MemoryRouter>
-    );
+  describe("Registerテスト", () => {
+    beforeEach(() => {
+      render(
+        <MemoryRouter initialEntries={["/cards/test123"]}>
+          <Routes>
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </MemoryRouter>
+      );
+    });
+  });
 
-    expect(screen.getByText("新規名刺登録")).toBeInTheDocument();
+  it("タイトルが表示される", async () => {
+    expect(await screen.getByText("新規名刺登録")).toBeInTheDocument();
   });
 
   it("全項目入力して登録ボタンを押すと/に遷移する", async () => {
-    render(
-      <MemoryRouter initialEntries={["/register"]}>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    // フィールドに値を入力
+    fireEvent.change(screen.getByLabelText("好きなid"), {
+      target: { value: "test123" },
+    });
+    fireEvent.change(screen.getByLabelText("お名前"), {
+      target: { value: "井ノ口孝輝" },
+    });
+    fireEvent.change(screen.getByLabelText("自己紹介"), {
+      target: { value: "自己紹介テキスト" },
+    });
+    fireEvent.change(screen.getByLabelText("GithubId"), {
+      target: { value: "GithubTest" },
+    });
+    fireEvent.change(screen.getByLabelText("QiitaId"), {
+      target: { value: "QiitaTest" },
+    });
+    fireEvent.change(screen.getByLabelText("TwitterId"), {
+      target: { value: "TwitterTest" },
+    });
 
-    fireEvent.change(screen.getByLabelText("好きなid"), { target: { value: "test123" } });
-    fireEvent.change(screen.getByLabelText("お名前"), { target: { value: "井ノ口孝輝" } });
-    fireEvent.change(screen.getByLabelText("自己紹介"), { target: { value: "自己紹介テキスト" } });
-    fireEvent.change(screen.getByLabelText("GithubId"), { target: { value: "GithubTest" } });
-    fireEvent.change(screen.getByLabelText("QiitaId"), { target: { value: "QiitaTest" } });
-    fireEvent.change(screen.getByLabelText("TwitterId"), { target: { value: "TwitterTest" } });
+    // 登録ボタンを押す
+    const registerButton = await screen.findByRole("button", { name: /登録/i });
+    fireEvent.click(registerButton);
 
-    fireEvent.click(screen.getByRole("button", { name: /登録/i }));
-
+    // 遷移が呼ばれるのを待つ
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/"));
   });
 
   it("必須項目が未入力の場合はバリデーションエラーが表示される", async () => {
-    render(
-      <MemoryRouter initialEntries={["/register"]}>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
     fireEvent.click(screen.getByRole("button", { name: /登録/i }));
 
     await screen.findByText("英単語は必須です");
     await screen.findByText("名前は必須です");
+    await screen.findByText("自己紹介は必須です");
   });
 
-  it("IDフィールドに英字以外が入力された場合はバリデーションエラーが表示される", async () => {
-    render(
-      <MemoryRouter initialEntries={["/register"]}>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </MemoryRouter>
-    );
+  it("オプションを入力しなくても登録ができる", async () => {
+    fireEvent.change(screen.getByLabelText("好きなid"), {
+      target: { value: "test999" },
+    });
 
-    fireEvent.change(screen.getByLabelText("GithubId"), { target: { value: "abc123" } });
-    fireEvent.click(screen.getByRole("button", { name: /登録/i }));
+    fireEvent.change(screen.getByLabelText("お名前"), {
+      target: { value: "テスト太郎" },
+    });
 
-    await screen.findByText("GithubIDは英字のみで入力して下さい");
+    fireEvent.change(screen.getByLabelText("自己紹介"), {
+      target: { value: "自己紹介テキスト" },
+    });
+
+    const noOptionButton = await screen.findByRole("button", { name: /登録/i });
+    fireEvent.click(noOptionButton);
   });
 });

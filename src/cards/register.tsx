@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardBody, Input, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../../supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   user_id: string;
@@ -17,10 +18,12 @@ export const Register = () => {
     handleSubmit, // submit時の処理をラップ
     formState: { errors }, // バリデーションエラー
   } = useForm<FormData>();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: FormData) => {
     console.log("送信データ:", data);
     const { error } = await supabase.from("users").insert([data]);
+    navigate("/");
 
     if (error) {
       console.log(error.message);
@@ -47,7 +50,12 @@ export const Register = () => {
             {errors.name && <Text color="red">{errors.name.message}</Text>}
 
             <Text>自己紹介</Text>
-            <Input {...register("description")} />
+            <Input
+              {...register("description", { required: "自己紹介は必須です" })}
+            />
+            {errors.description && (
+              <Text color="red">{errors.description.message}</Text>
+            )}
 
             <Text>GithubId</Text>
             <Input

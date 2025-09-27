@@ -31,6 +31,7 @@ export const Cardmenu = () => {
         </Card>
       </Box>
       <Button onClick={handleClick}>検索</Button>
+      <Button onClick = {() => navigate("/register")}>新規登録</Button>
     </div>
   );
 };
