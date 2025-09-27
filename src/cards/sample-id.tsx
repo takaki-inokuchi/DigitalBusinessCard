@@ -66,6 +66,7 @@ export const SampleId = () => {
                         display="inline-flex"
                         alignItems="center"
                         isExternal
+                        aria-label="github_id"
                       >
                         <FaGithub />
                       </Link>
@@ -79,6 +80,7 @@ export const SampleId = () => {
                         display="inline-flex"
                         alignItems="center"
                         isExternal
+                        aria-label="qiita_id"
                       >
                         <FaWallet />
                       </Link>
@@ -91,6 +93,7 @@ export const SampleId = () => {
                         display="inline-flex"
                         alignItems="center"
                         isExternal
+                        aria-label="x_id"
                       >
                         <FaXTwitter />
                       </Link>
