@@ -2,7 +2,17 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { SampleId } from "./sample-id";
 import { mockUser } from "../tests/mockUser";
+
 jest.mock("../../supabaseClient", () => {
+  const mockUser = {
+    user_id: "test123",
+    name: "井ノ口孝輝",
+    description: "自己紹介テキスト",
+    github_id: "https://github.com/test",
+    qiita_id: "https://qiita.com/test",
+    x_id: "https://x.com/test",
+    created_at: "2025-01-01",
+  };
   return {
     supabase: {
       from: jest.fn().mockReturnThis(),
