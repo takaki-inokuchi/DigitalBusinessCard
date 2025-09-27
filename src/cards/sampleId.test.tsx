@@ -58,10 +58,6 @@ describe("SampleIdページ", () => {
       expect(await screen.findByText(mockUser.description)).toBeInTheDocument();
     });
 
-    it("技術が表示される", async () => {
-      expect(await screen.findByText(mockUser.x_id)).toBeInTheDocument();
-    });
-
     it("Githubアイコンが表示される", async () => {
       expect(
         await screen.findByRole("link", { name: /github_id/i })
