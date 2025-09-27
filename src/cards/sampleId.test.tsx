@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { SampleId } from "./sample-id";
 import { mockUser } from "../tests/mockUser";
@@ -8,9 +8,9 @@ jest.mock("../../supabaseClient", () => {
     user_id: "test123",
     name: "井ノ口孝輝",
     description: "自己紹介テキスト",
-    github_id: "https://github.com/test",
-    qiita_id: "https://qiita.com/test",
-    x_id: "https://x.com/test",
+    github_id: "test",
+    qiita_id: "test",
+    x_id: "test",
     created_at: "2025-01-01",
   };
   return {
@@ -38,14 +38,16 @@ describe("SampleIdページ", () => {
   });
 
   describe("SampleId コンポーネント", () => {
-    beforeEach(() => {
-      render(
-        <MemoryRouter initialEntries={["/cards/test123"]}>
-          <Routes>
-            <Route path="/cards/:id" element={<SampleId />} />
-          </Routes>
-        </MemoryRouter>
-      );
+    beforeEach(async () => {
+      await act(async () => {
+        render(
+          <MemoryRouter initialEntries={["/cards/test123"]}>
+            <Routes>
+              <Route path="/cards/:id" element={<SampleId />} />
+            </Routes>
+          </MemoryRouter>
+        );
+      });
     }); //MemoryRouterはURLを扱う機能をモックするためのRouter initialEntriesでテスト開始時の URLを指定
 
     it("名前が表示される", async () => {
