@@ -1,4 +1,10 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { Register } from "./register";
 
@@ -68,26 +74,28 @@ describe("Registerページ", () => {
   });
 
   it("必須項目が未入力の場合はバリデーションエラーが表示される", async () => {
-    fireEvent.click(screen.getByRole("button", { name: /登録/i }));
-
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /登録/i }));
+    });
     await screen.findByText("英単語は必須です");
     await screen.findByText("名前は必須です");
     await screen.findByText("自己紹介は必須です");
   });
 
   it("オプションを入力しなくても登録ができる", async () => {
-    fireEvent.change(screen.getByLabelText("好きなid"), {
-      target: { value: "test999" },
-    });
-    fireEvent.change(screen.getByLabelText("お名前"), {
-      target: { value: "テスト太郎" },
-    });
-    fireEvent.change(screen.getByLabelText("自己紹介"), {
-      target: { value: "自己紹介テキスト" },
-    });
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText("好きなid"), {
+        target: { value: "test999" },
+      });
+      fireEvent.change(screen.getByLabelText("お名前"), {
+        target: { value: "テスト太郎" },
+      });
+      fireEvent.change(screen.getByLabelText("自己紹介"), {
+        target: { value: "自己紹介テキスト" },
+      });
 
-    fireEvent.click(screen.getByRole("button", { name: /登録/i }));
-
+      fireEvent.click(screen.getByRole("button", { name: /登録/i }));
+    });
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/"));
   });
 });
