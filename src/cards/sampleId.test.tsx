@@ -59,7 +59,7 @@ describe("SampleIdページ", () => {
     });
 
     it("技術が表示される", async () => {
-      expect(await screen.findByText("React")).toBeInTheDocument();
+      expect(await screen.findByText(mockUser.x_id)).toBeInTheDocument();
     });
 
     it("Githubアイコンが表示される", async () => {

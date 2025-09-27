@@ -18,17 +18,10 @@ import {
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter, FaWallet } from "react-icons/fa6";
 
-type Skill = {
-  id: number;
-  name: string;
-};
-
 export const SampleId = () => {
   const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState<AppUser | null>(null);
-  const [skills, setSkills] = useState<Skill[]>([]);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (!id) return;
@@ -45,30 +38,6 @@ export const SampleId = () => {
       if (!userData) return;
 
       setUser(AppUser.fromDB(userData));
-
-      const { data: userSkills, error: userSkillsError } = await supabase
-        .from("user_skill")
-        .select("skill_id")
-        .eq("user_id", id);
-
-      if (userSkillsError) {
-        console.log(userSkillsError);
-        return;
-      }
-      const skillIds = userSkills?.map((us) => us.skill_id) || [];
-      if (skillIds.length === 0) {
-        setSkills([]);
-        return;
-      }
-      const { data: skillsData, error: skillsError } = await supabase
-        .from("skills")
-        .select("*")
-        .in("id", skillIds);
-      if (skillsError) {
-        console.log(skillsError);
-        return;
-      }
-      setSkills(skillsData || []);
     };
     fetchUser();
   }, [id]);
@@ -87,19 +56,17 @@ export const SampleId = () => {
                 <p>{user.description}</p>
 
                 <Text fontWeight="bold">好きな技術</Text>
-                <p>
-                  {skills.map((skill, index) => (
-                    <span key={skill.id}>
-                      {skill.name}
-                      {index < skills.length - 1 ? ", " : ""}
-                    </span>
-                  ))}
-                </p>
+                <p>{user.skills?.join(",")}</p>
 
-                <HStack  justify="center" spacing={4}>
+                <HStack justify="center" spacing={4}>
                   {user.github_id && (
                     <Text>
-                      <Link href={user.github_id} display="inline-flex" alignItems="center" isExternal>
+                      <Link
+                        href={user.github_id}
+                        display="inline-flex"
+                        alignItems="center"
+                        isExternal
+                      >
                         <FaGithub />
                       </Link>
                     </Text>
@@ -107,15 +74,25 @@ export const SampleId = () => {
 
                   {user.qiita_id && (
                     <Text>
-                      <Link href={user.qiita_id} display="inline-flex" alignItems="center" isExternal>
-                      <FaWallet />
+                      <Link
+                        href={user.qiita_id}
+                        display="inline-flex"
+                        alignItems="center"
+                        isExternal
+                      >
+                        <FaWallet />
                       </Link>
                     </Text>
                   )}
                   {user.x_id && (
                     <Text>
-                      <Link href={user.x_id} display="inline-flex" alignItems="center" isExternal>
-                      <FaXTwitter />
+                      <Link
+                        href={user.x_id}
+                        display="inline-flex"
+                        alignItems="center"
+                        isExternal
+                      >
+                        <FaXTwitter />
                       </Link>
                     </Text>
                   )}
@@ -123,7 +100,9 @@ export const SampleId = () => {
               </Stack>
             </CardBody>
           </Card>
-          <Button m={3} onClick={() => navigate("/register")}>戻る</Button>
+          <Button m={3} onClick={() => navigate("/register")}>
+            戻る
+          </Button>
         </Box>
       ) : (
         <p>読み込み中...</p>

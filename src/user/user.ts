@@ -6,7 +6,9 @@ export type UserProps = {
   github_id: string;
   qiita_id: string;
   x_id: string;
+  skills?: string[];
   created_at: string;
+
 };
 
 export class AppUser {
@@ -16,6 +18,7 @@ export class AppUser {
   github_id?: string;
   qiita_id?: string;
   x_id?: string;
+  skills?: string[];
   created_at?: string;
 
   constructor(
@@ -25,6 +28,7 @@ export class AppUser {
     github_id?: string,
     qiita_id?: string,
     x_id?: string,
+    skills?: string[],
     created_at?: string
   ) {
     this.user_id = user_id;
@@ -33,11 +37,26 @@ export class AppUser {
     this.github_id = github_id;
     this.qiita_id = qiita_id;
     this.x_id = x_id;
+    this.skills = skills;
     this.created_at = created_at;
+
   }
 
-  // ファクトリーメソッド
   static fromDB(data: UserProps): AppUser {
+    let skillsArray: string[] | undefined;
+
+    if (data.skills) {
+      if (typeof data.skills === "string") {
+        try {
+          skillsArray = JSON.parse(data.skills);
+        } catch {
+          skillsArray = [data.skills];
+        }
+      } else {
+        skillsArray = data.skills;
+      }
+    }
+
     return new AppUser(
       data.user_id,
       data.name,
@@ -45,6 +64,7 @@ export class AppUser {
       data.github_id ? `https://github.com/${data.github_id}` : undefined,
       data.qiita_id ? `https://qiita.com/${data.qiita_id}` : undefined,
       data.x_id ? `https://x.com/${data.x_id}` : undefined,
+      skillsArray,
     );
   }
 }

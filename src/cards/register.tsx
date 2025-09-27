@@ -1,4 +1,14 @@
-import { Box, Button, Card, CardBody, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Checkbox,
+  CheckboxGroup,
+  Input,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +20,8 @@ type FormData = {
   github_id: string;
   qiita_id: string;
   x_id: string;
+  skills: string[];
 };
-
 
 export const Register = () => {
   const {
@@ -64,9 +74,32 @@ export const Register = () => {
             {errors.description && (
               <Text color="red">{errors.description.message}</Text>
             )}
+            <Text>技術</Text>
+            <CheckboxGroup>
+              <Stack spacing={2} direction="column">
+                <Checkbox value="React" {...register("skills")}>
+                  React
+                </Checkbox>
+                <Checkbox value="TypeScript" {...register("skills")}>
+                  TypeScript
+                </Checkbox>
+                <Checkbox value="JavaScript" {...register("skills")}>
+                  JavaScript
+                </Checkbox>
+                <Checkbox value="Git" {...register("skills")}>
+                  Git
+                </Checkbox>
+                <Checkbox value="Firebase" {...register("skills")}>
+                  Firebase
+                </Checkbox>
+                {/* 必要に応じて追加 */}
+              </Stack>
+            </CheckboxGroup>
+            {errors.skills && <Text color="red">{errors.skills.message}</Text>}
 
             <Text>GithubId</Text>
-            <Input aria-label="github_id"
+            <Input
+              aria-label="github_id"
               {...register("github_id", {
                 pattern: {
                   value: /^[A-Za-z]*$/,
@@ -79,7 +112,8 @@ export const Register = () => {
             )}
 
             <Text>QiitaId</Text>
-            <Input aria-label="qiita_id"
+            <Input
+              aria-label="qiita_id"
               {...register("qiita_id", {
                 pattern: {
                   value: /^[A-Za-z]*$/,
@@ -92,7 +126,8 @@ export const Register = () => {
             )}
 
             <Text>TwitterId</Text>
-            <Input aria-label="x_id"
+            <Input
+              aria-label="x_id"
               {...register("x_id", {
                 pattern: {
                   value: /^[A-Za-z]*$/,
