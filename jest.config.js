@@ -7,10 +7,13 @@ export default {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
     "\\.svg$": "<rootDir>/__mocks__/fileMock.js",
   },
-  globals: {
-    "ts-jest": {
-      tsconfig: "tsconfig.app.json", // ← ここを明示
-      isolatedModules: true          // 任意、型チェックを分離して高速化
-    }
-  },
+  transform: {
+  "^.+\\.tsx?$": ["ts-jest"]
+}
+  // globals: {
+  //   "ts-jest": {
+  //     tsconfig: "tsconfig.app.json", // ← ここを明示
+  //     isolatedModules: true          // 任意、型チェックを分離して高速化
+  //   }
+  // },
 };

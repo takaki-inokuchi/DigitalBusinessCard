@@ -38,13 +38,14 @@
     "noUnusedLocals": true,
     // 使ってない変数があればエラーにする
     "noUnusedParameters": true,
-     // 使ってない関数の引数があればエラーにする
+    // 使ってない関数の引数があればエラーにする
     "erasableSyntaxOnly": true,
-     // 型の安全に関係ない構文だけ許可 (パフォーマンス向上目的)
+    // 型の安全に関係ない構文だけ許可 (パフォーマンス向上目的)
     "noFallthroughCasesInSwitch": true,
     // switch文で break を書き忘れるとエラーにする
-    "noUncheckedSideEffectImports": true
-     // import しただけで副作用を起こすものをチェック
+    "noUncheckedSideEffectImports": true,
+    // import しただけで副作用を起こすものをチェック
+    "isolatedModules": true
   },
   "include": ["src"]
   // 型チェックの対象にするフォルダ
