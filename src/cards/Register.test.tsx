@@ -10,6 +10,10 @@ jest.mock("../../supabaseClient", () => ({
   },
 }));
 
+beforeAll(() => {
+  window.alert = jest.fn();
+});
+
 // useNavigate のモック
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
