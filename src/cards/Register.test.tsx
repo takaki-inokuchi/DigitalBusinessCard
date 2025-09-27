@@ -20,26 +20,21 @@ jest.mock("react-router-dom", () => ({
 describe("Registerページ", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
 
-  describe("Registerテスト", () => {
-    beforeEach(() => {
-      render(
-        <MemoryRouter initialEntries={["/cards/test123"]}>
-          <Routes>
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </MemoryRouter>
-      );
-    });
+    render(
+      <MemoryRouter initialEntries={["/register"]}>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </MemoryRouter>
+    );
   });
 
   it("タイトルが表示される", async () => {
-    expect(await screen.getByText("新規名刺登録")).toBeInTheDocument();
+    expect(await screen.findByText("新規名刺登録")).toBeInTheDocument();
   });
 
   it("全項目入力して登録ボタンを押すと/に遷移する", async () => {
-    // フィールドに値を入力
     fireEvent.change(screen.getByLabelText("好きなid"), {
       target: { value: "test123" },
     });
@@ -59,11 +54,8 @@ describe("Registerページ", () => {
       target: { value: "TwitterTest" },
     });
 
-    // 登録ボタンを押す
-    const registerButton = await screen.findByRole("button", { name: /登録/i });
-    fireEvent.click(registerButton);
+    fireEvent.click(screen.getByRole("button", { name: /登録/i }));
 
-    // 遷移が呼ばれるのを待つ
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/"));
   });
 
@@ -79,16 +71,15 @@ describe("Registerページ", () => {
     fireEvent.change(screen.getByLabelText("好きなid"), {
       target: { value: "test999" },
     });
-
     fireEvent.change(screen.getByLabelText("お名前"), {
       target: { value: "テスト太郎" },
     });
-
     fireEvent.change(screen.getByLabelText("自己紹介"), {
       target: { value: "自己紹介テキスト" },
     });
 
-    const noOptionButton = await screen.findByRole("button", { name: /登録/i });
-    fireEvent.click(noOptionButton);
+    fireEvent.click(screen.getByRole("button", { name: /登録/i }));
+
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/"));
   });
 });

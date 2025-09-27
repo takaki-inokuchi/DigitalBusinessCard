@@ -40,17 +40,24 @@ export const Register = () => {
         <Card>
           <CardBody>
             <Text>好きなid</Text>
-            <Input {...register("user_id", { required: "英単語は必須です" })} />
+            <Input
+              aria-label="好きなid"
+              {...register("user_id", { required: "英単語は必須です" })}
+            />
             {errors.user_id && (
               <Text color="red">{errors.user_id.message}</Text>
             )}
 
             <Text>お名前</Text>
-            <Input {...register("name", { required: "名前は必須です" })} />
+            <Input
+              aria-label="お名前"
+              {...register("name", { required: "名前は必須です" })}
+            />
             {errors.name && <Text color="red">{errors.name.message}</Text>}
 
             <Text>自己紹介</Text>
             <Input
+              aria-label="自己紹介"
               {...register("description", { required: "自己紹介は必須です" })}
             />
             {errors.description && (
