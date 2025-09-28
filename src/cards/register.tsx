@@ -25,9 +25,9 @@ type FormData = {
 
 export const Register = () => {
   const {
-    register, // inputをフォームに登録する
-    handleSubmit, // submit時の処理をラップ
-    formState: { errors }, // バリデーションエラー
+    register, 
+    handleSubmit, 
+    formState: { errors },
   } = useForm<FormData>();
   const navigate = useNavigate();
 

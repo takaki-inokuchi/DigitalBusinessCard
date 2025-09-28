@@ -1,7 +1,7 @@
 # Digital Business Card
 
 シンプルなデジタル名刺管理アプリです。
-supabaseをバックエンドに使用し、毎日ユーザー情報を自動で削除するバッチ処理を組み込んでいます。
+supabase をバックエンドに使用し、毎日ユーザー情報を自動で削除するバッチ処理を組み込んでいます。
 
 ---
 
@@ -24,12 +24,12 @@ supabaseをバックエンドに使用し、毎日ユーザー情報を自動で
 
 ## 使用した技術
 
-
 - **フロントエンド**: React, Vite, Chakra UI
 - **バックエンド / データベース**: Supabase
 - **バッチ処理**: Node.js, ts-node
 - **CI/CD / 自動化**: GitHub Actions
 - **言語**: TypeScript
+- **テスト**: Jest, React Testing Library
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)
@@ -53,3 +53,4 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 # Vite フロント用（Anon Key）
 VITE_SUPABASE_URL=https://xxxxxx.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
+```

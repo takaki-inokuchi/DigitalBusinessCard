@@ -10,10 +10,4 @@ export default {
   transform: {
   "^.+\\.tsx?$": ["ts-jest"]
 }
-  // globals: {
-  //   "ts-jest": {
-  //     tsconfig: "tsconfig.app.json", // ← ここを明示
-  //     isolatedModules: true          // 任意、型チェックを分離して高速化
-  //   }
-  // },
 };
