@@ -102,7 +102,7 @@ export const Register = () => {
               aria-label="github_id"
               {...register("github_id", {
                 pattern: {
-                  value: /^[A-Za-z]*$/,
+                  value: /^[A-Za-z-]*$/,
                   message: "GithubIDは英字のみで入力して下さい",
                 },
               })}
@@ -116,7 +116,7 @@ export const Register = () => {
               aria-label="qiita_id"
               {...register("qiita_id", {
                 pattern: {
-                  value: /^[A-Za-z]*$/,
+                  value: /^[A-Za-z-]*$/,
                   message: "qiitaIDは英字のみで入力して下さい",
                 },
               })}
@@ -130,7 +130,7 @@ export const Register = () => {
               aria-label="x_id"
               {...register("x_id", {
                 pattern: {
-                  value: /^[A-Za-z]*$/,
+                  value: /^[A-Za-z-]*$/,
                   message: "xIDは英字のみで入力して下さい",
                 },
               })}
