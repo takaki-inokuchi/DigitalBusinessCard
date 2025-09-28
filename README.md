@@ -59,4 +59,4 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 ---
 
 ## アプリデモ
-![アプリデモ](./Animation.gif)
+![アプリデモ](./public/Animation.gif)
