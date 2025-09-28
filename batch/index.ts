@@ -2,7 +2,7 @@ import { supabase } from "../supabaseClient.ts";
 
 async function deleteYesterdayData() {
   const yesterday = new Date();
-  // yesterday.setDate(yesterday.getDate() - 1);
+  yesterday.setDate(yesterday.getDate() - 1);
   const yyyymmdd = yesterday.toISOString().split("T")[0];
 
   // users 削除
