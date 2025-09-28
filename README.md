@@ -36,3 +36,22 @@ supabaseをバックエンドに使用し、毎日ユーザー情報を自動で
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+
+---
+
+## 環境変数
+
+アプリやバッチ処理で Supabase に接続するため、以下の環境変数を設定します。
+
+### ローカル開発用 (.env ファイル)
+
+```env
+# Supabase プロジェクト URL
+SUPABASE_URL=https://xxxxxx.supabase.co
+
+# Supabase Service Role Key（バッチ処理用）
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# Vite フロント用（Anon Key）
+VITE_SUPABASE_URL=https://xxxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
